@@ -6,11 +6,9 @@ function angleBetweenTwoVectors (v1, v2) {
   return Math.acos(cosA)
 }
 /* eslint one-var: ["error", "always"] */
-/* eslint-env es6 */
 class PathFinder {
   constructor (sizeCell) {
     this.units = []
-    // var PathFindWorker = require('worker-loader!./PathFind.js')
     this.worker = new PathFindWorker()
     this.worker.postMessage({type: 'init', sizeCell: sizeCell})
     this.worker.onmessage = this.workerResult.bind(this)
@@ -23,7 +21,7 @@ class PathFinder {
       basePath,
       offset,
       i,
-      position// , baseUnit
+      position
     switch (e.data.type) {
 
     }
@@ -41,11 +39,9 @@ class PathFinder {
       } else if (angle < -Math.PI / 2) {
         angle = angle + Math.PI
       }
-      console.log('angle ', angle)
       this.units[e.data.id].squad.units.forEach(function (unit, num, squad) {
         var path = [],
           length
-        console.log('unit.positionAngle ', unit.positionAngle)
         unit.positionAngle += angle
         if (unit.positionAngle > 2 * Math.PI) {
           unit.positionAngle -= 2 * Math.PI
@@ -55,10 +51,6 @@ class PathFinder {
         for (i in e.data.path) {
           if (num === 0) {
             offset = _this.units[e.data.id].offset
-            /* position = {
-              x: e.data.path[i][0] - offset.x * Math.cos(_this.units[e.data.id].positionAngle + angle) + offset.z * Math.sin(_this.units[e.data.id].positionAngle + angle),
-              z: e.data.path[i][1] - offset.z * Math.cos(_this.units[e.data.id].positionAngle + angle) - offset.x * Math.sin(_this.units[e.data.id].positionAngle + angle)
-            } */
             length = Math.sqrt(offset.x * offset.x + offset.z * offset.z)
             position = {
               x: e.data.path[i][0] - length * Math.sin(unit.positionAngle),
@@ -68,9 +60,7 @@ class PathFinder {
             path.push([position.x, position.z])
             unit.alligned = false
           } else {
-            // baseUnit = _this.units[e.data.id].squad.units[0]
             length = Math.sqrt(unit.offset.x * unit.offset.x + unit.offset.z * unit.offset.z)
-            console.log('unit.positionAngle ', unit.positionAngle)
             path.push([
               basePath[i][0] + length * Math.sin(unit.positionAngle),
               basePath[i][1] + length * Math.cos(unit.positionAngle)
@@ -79,9 +69,6 @@ class PathFinder {
         }
         unit.path = path
         unit.moveAnimation()
-        /* if (e.data.path.length != 0) {
-        unit.isMove = true;
-        } */
       })
     } else {
       this.units[e.data.id].path = e.data.path

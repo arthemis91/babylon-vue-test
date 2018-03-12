@@ -4,4 +4,3 @@ easystar.setGrid ([
   [],
   []
 ])
-console.log(easystar)
