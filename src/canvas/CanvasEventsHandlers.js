@@ -50,7 +50,7 @@ class CanvasEventsHandler {
   }
 
   mouseScrollHandler (e) {
-    if (e.wheelDelta > 0 || e.detail < 0) {
+    if (e.deltaY > 0) {
       this.cameraController.forth()
     } else {
       this.cameraController.closer()
@@ -154,7 +154,6 @@ class CanvasEventsHandler {
   }
 
   keyDownHandler (key) {
-    console.log(key)
     var code = this.keyCodeProxy(key.keyCode)
     this.userActionController.pressed(code)
     this.checkCameraMoveKeys(code)
@@ -162,7 +161,6 @@ class CanvasEventsHandler {
   }
 
   keyUpHandler (key) {
-    console.log(key)
     var code = this.keyCodeProxy(key.keyCode),
       keyPressed
     this.userActionController.unPressed(code)
@@ -190,7 +188,6 @@ class CanvasEventsHandler {
   }
 
   checkCameraMoveOnEdge (x, y) {
-    // console.log(x, window.innerWidth, y, window.innerHeight)
     var offset = {x: 0, y: 0, z: 0}
     if (this.checkKeysPressed('move') || this.cameraController.rotateBeginPoint) {
       return

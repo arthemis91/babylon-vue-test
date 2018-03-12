@@ -12,7 +12,6 @@ class UserActionController {
   }
 
   unPressed (code) {
-    console.log('unpress ', code)
     delete this.keysPressed[code]
   }
 }
