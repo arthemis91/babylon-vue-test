@@ -16,6 +16,7 @@
     "babylonjs-gui": "^3.2.0-alphaC",
     "express": "^4.16.2",
     "node-static": "^0.7.10",
+    "ssri": "^5.2.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
